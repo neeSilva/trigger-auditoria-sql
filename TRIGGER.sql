@@ -1,0 +1,54 @@
+-- Trigger para cada linha que for alterada
+CREATE OR REPLACE TRIGGER TRG_AUDITORIA_CARTAO_CREDITO
+AFTER INSERT OR UPDATE OR DELETE ON T_MC_CARTAO_CREDITO_CLI
+FOR EACH ROW 
+
+DECLARE
+-- Identificar o tipo de operação (INSERT, UPDATE ou DELETE)
+    v_operacao VARCHAR2(20);
+BEGIN
+    IF INSERTING THEN v_operacao := 'INSERT';
+    ELSIF UPDATING THEN v_operacao := 'UPDATE';
+    ELSIF DELETING THEN v_operacao := 'DELETE';
+    END IF;
+
+--Inserção de valores na tabela LOG
+    INSERT INTO T_MC_CARTAO_CREDITO_CLI_LOG (
+        ID_LOG,
+        DT_MOVIMENTACAO,
+        NM_OPERACAO_IUD,
+        ID_CARTAO_CREDITO,
+        NR_CARTAO_CREDITO_NOVO,
+        NR_CARTAO_CREDITO_ANTIGO,
+        NM_CLIENTE_CARTAO_NOVO,
+        NM_CLIENTE_CARTAO_ANTIGO,
+        NM_BANDEIRA_CARTAO_NOVO,
+        NM_BANDEIRA_CARTAO_ANTIGO,
+        MES_ANO_VENCTO_NOVO,
+        MES_ANO_VENCTO_ANTIGO,
+        NR_CODIGO_SEGURANCA_NOVO,
+        NR_CODIGO_SEGURANCA_ANTIGO
+    ) VALUES (
+        SEQ_AUDITORIA_LOG.NEXTVAL,
+        SYSDATE,
+        v_operacao,
+        NVL(:NEW.ID_CARTAO_CREDITO, :OLD.ID_CARTAO_CREDITO), 
+        
+-- Mapeamento das alterações :NEW para _NOVO e :OLD para _ANTIGO
+        :NEW.NR_CARTAO_CREDITO,
+        :OLD.NR_CARTAO_CREDITO,
+        
+        :NEW.NM_CLIENTE_CARTAO,
+        :OLD.NM_CLIENTE_CARTAO,
+        
+        :NEW.NM_BANDEIRA_CARTAO,
+        :OLD.NM_BANDEIRA_CARTAO,
+        
+        :NEW.MES_ANO_VENCTO,
+        :OLD.MES_ANO_VENCTO,
+        
+        :NEW.NR_CODIGO_SEGURANCA,
+        :OLD.NR_CODIGO_SEGURANCA
+    );
+END;
+/
