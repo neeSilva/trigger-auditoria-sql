@@ -13,6 +13,7 @@ BEGIN
     END IF;
 
 --Inserção de valores na tabela LOG
+
     INSERT INTO T_MC_CARTAO_CREDITO_CLI_LOG (
         ID_LOG,
         DT_MOVIMENTACAO,
