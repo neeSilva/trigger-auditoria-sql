@@ -1,6 +1,6 @@
 # Sistema de Auditoria com Triggers
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-003B57?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-003B57?style=for-the-badge&logo=ql&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Concluído-success?style=for-the-badge)
 
 > Implementação prática de um sistema de auditoria (Change Data Capture) utilizando PL/SQL. O projeto automatiza o rastreamento de operações DML (`INSERT`, `UPDATE`, `DELETE`) garantindo o histórico e a governança dos dados.
