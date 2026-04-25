@@ -1,4 +1,4 @@
--- Trigger para cada linha que for alterada
+-- Trigger para cada linha que for alterada:
 CREATE OR REPLACE TRIGGER TRG_AUDITORIA_CARTAO_CREDITO
 AFTER INSERT OR UPDATE OR DELETE ON T_MC_CARTAO_CREDITO_CLI
 FOR EACH ROW 
